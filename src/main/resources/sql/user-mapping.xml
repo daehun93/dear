@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userMapper">
+
+	<select id="checkEmailDuplication" parameterType="string" resultType="int">
+		select count(*) from user where email = #{value}
+	</select>
+
+	<insert id="createUser" parameterType="user">
+		insert into user ( email, password, authCode)
+		values ( #{email}, #{password}, #{authCode})
+	</insert>
+
+	<update id="updateUser" parameterType="user">
+		update user
+		set 
+			nickname=#{nickname}, password=#{password}, authCode = #{authCode},phone = #{phone}
+		,age = #{age},sex = #{sex},birthDay = #{birthDay},country = #{country},alarm = #{alarm}
+		where email=#{email}
+	</update>
+
+	<select id = "get" parameterType = "string" resultType = "user">
+		select * from user where email = #{value}
+	</select>
+
+	<select id="checkLogin" parameterType="string" resultType="string">
+		select password from user where email=#{value}
+	</select>
+
+	<delete id="deleteUser" parameterType="string">
+		delete from user where email=#{value}
+	</delete>
+	
+	<select id="authUser" parameterType="user" resultType="int">
+		select count(*) from user where email = #{email} and authCode = #{authCode}
+	</select>
+	
+	<select id="searchByNickname" parameterType="string" resultType="user">
+		select * from user where nickname = #{nickname}
+	</select>
+	
+	<select id="searchByUserid" parameterType="int" resultType="user">
+		select * from user where userid = #{userid}
+	</select>
+	
+	<select id="searchAllNickname" parameterType="string" resultType="user">
+		select * from user where nickname like '%${value}%'
+	</select>
+	<select id="checkNickname" parameterType="string" resultType="int">
+		select count(*) from user where nickname =#{value}
+	</select>
+	
+</mapper>
