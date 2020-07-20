@@ -14,6 +14,8 @@
 	<!-- JUint MyBatis 단위테스용 -->
 	<mappers>
 	<mapper resource="sql/user-mapping.xml" />
+	<mapper resource="sql/feed-mapping.xml" />
+	<mapper resource="sql/notice-mapping.xml" />
 	</mappers>
 
 </configuration>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FeedGradeMapper">
+
+<insert id="insertFeedGrade" parameterType="FeedGrade" useGeneratedKeys="true">
+INSERT INTO feedgrade(feedid,userid,gradepoint)
+values(#{feedid},#{userid},#{gradepoint})
+</insert>
+
+<update id="updateFeedGrade" parameterType="FeedGrade">
+	update feedgrade set gradepoint=#{gradepoint}
+	where feedgradeid=#{feedgradeid}
+</update>
+
+<delete id="deleteFeedGrade" parameterType="int">
+delete from feedgrade where feedgradeid=#{feedgradeid}
+</delete>	
+	
+<select id="searchHighGrade" parameterType="int" resultType="feed">
+select * from feed where feedid in(select feedid from feedgrade where userid=#{userid} order by gradepoint desc)
+</select>
+
+	
+</mapper>

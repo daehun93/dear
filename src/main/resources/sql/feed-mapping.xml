@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="feedMapper">
+
+<insert id="insertFeed" parameterType="Feed" useGeneratedKeys="true">
+INSERT INTO Feed(userid,title,content,job,age)
+values(#{userid},#{title},#{content},#{job},#{age})
+</insert>
+
+<update id="updateFeed" parameterType="Feed">
+	update Feed set title=#{title},content=#{content},job=#{job},age=#{age}
+	where feedid=#{feedid}
+</update>
+
+<delete id="deleteFeed" parameterType="int">
+delete from feed where feedid=#{feedid}
+</delete>	
+	
+<select id="searchAllFeed" resultType="feed">
+select * from feed;
+</select>
+
+<select id="searchMyFeed" parameterType="int" resultType="feed">
+select * from feed where userid = #{userid};
+</select>
+
+<select id="searchOneFeed" parameterType="int" resultType="feed">
+select * from feed where feedid=#{feedid};
+</select>	
+
+<insert id="insertFeedComment" parameterType="feedcomment">
+INSERT INTO feedcomment(feedid,userid,content)
+values(#{feedid},#{userid},#{content})
+</insert>	
+
+<update id="updateFeedComment" parameterType="feedcomment">
+update feedcomment set content=#{content}
+	where feedcommentid=#{feedcommentid}
+</update>	
+	
+<delete id="deleteFeedComment" parameterType="int">
+delete from feedcomment where feedcommentid=#{feedcommentid}
+</delete>
+
+<select id="searchAllFeedComment" parameterType="int" resultType="feedcomment">
+select * from feedcomment where feedid=#{feedid}
+</select>
+
+	
+</mapper>
