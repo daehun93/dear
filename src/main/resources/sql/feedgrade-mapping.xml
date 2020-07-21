@@ -19,7 +19,7 @@ delete from feedgrade where feedgradeid=#{feedgradeid}
 </delete>	
 	
 <select id="searchHighGrade" parameterType="int" resultType="feed">
-select * from feed where feedid in(select feedid from feedgrade where userid=#{userid} order by gradepoint desc)
+select feed.* from feed,feedgrade where feed.feedid = feedgrade.feedid and feedgrade.userid =#{userid} order by gradepoint desc;
 </select>
 
 	

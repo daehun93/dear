@@ -16,6 +16,7 @@
 	<mapper resource="sql/user-mapping.xml" />
 	<mapper resource="sql/feed-mapping.xml" />
 	<mapper resource="sql/notice-mapping.xml" />
+	<mapper resource="sql/feedgrade-mapping.xml" />
 	</mappers>
 
 </configuration>

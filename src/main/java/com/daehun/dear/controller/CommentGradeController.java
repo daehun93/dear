@@ -13,28 +13,30 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.daehun.dear.service.FeedGradeService;
+import com.daehun.dear.service.CommentGradeService;
 import com.daehun.dear.vo.BasicResponse;
+import com.daehun.dear.vo.CommentGrade;
 import com.daehun.dear.vo.Feed;
+import com.daehun.dear.vo.FeedComment;
 import com.daehun.dear.vo.FeedGrade;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/grade")
+@RequestMapping("/commentgrade")
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
-public class GradeController {
+public class CommentGradeController {
 
 	@Autowired
-	private FeedGradeService feedgradeService;
+	private CommentGradeService commentgradeService;
 	
-	@ApiOperation(value = "평가추가")
-	@RequestMapping(value = "/insertFeedGrade", method = RequestMethod.POST)
-	public Object insertFeedGrade(@RequestBody FeedGrade feedgrade)throws Exception{
+	@ApiOperation(value = "댓글평가추가")
+	@RequestMapping(value = "/insertCommentGrade", method = RequestMethod.POST)
+	public Object insertCommentGrade(@RequestBody CommentGrade commentgrade)throws Exception{
 		BasicResponse result = new BasicResponse();
 		String ret = "";
-		if(feedgradeService.insertFeedGrade(feedgrade)!=0) {
+		if(commentgradeService.insertCommentGrade(commentgrade)!=0) {
 			result.status=true;
 		}else {
 			result.status=false;
@@ -46,15 +48,13 @@ public class GradeController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "평가수정하기")
+	@ApiOperation(value = "댓글평가수정하기")
 	@RequestMapping(value = "/updateFeedGrade", method = RequestMethod.PUT)
-	public Object updateFeedGrade(@RequestBody FeedGrade feedgrade)throws Exception{
+	public Object updateCommentGrade(@RequestBody CommentGrade commentgrade)throws Exception{
 		String ret ="";
-		//자유게시판 들어가는거
-		//글쓴이,내용,직업,나이
-		System.out.println(feedgrade.toString());
+		System.out.println(commentgrade.toString());
 		
-		if(feedgradeService.updateFeedGrade(feedgrade)) {
+		if(commentgradeService.updateCommentGrade(commentgrade)) {
 			ret = "true";
 		}else {
 			ret = "false";
@@ -67,12 +67,12 @@ public class GradeController {
 		return new ResponseEntity<String>(mapper.writeValueAsString(map), HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "평가삭제하기")
-	@RequestMapping(value = "/deleteFeedGrade", method = RequestMethod.DELETE)
-	public Object deleteFeedGrade(@RequestParam int feedgradeid)throws Exception{
+	@ApiOperation(value = "댓글평가삭제하기")
+	@RequestMapping(value = "/deleteCommentGrade", method = RequestMethod.DELETE)
+	public Object deleteCommentGrade(@RequestParam int commentgradeid)throws Exception{
 		String ret ="";
 		
-		if(feedgradeService.deleteFeedGrade(feedgradeid)) {
+		if(commentgradeService.deleteCommentGrade(commentgradeid)) {
 			ret = "true";
 		}else {
 			ret = "false";
@@ -85,20 +85,18 @@ public class GradeController {
 		return new ResponseEntity<String>(mapper.writeValueAsString(map), HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "내가평가한글높은점수부터보기")
-	@RequestMapping(value = "/searchHighGrade", method = RequestMethod.POST)
-	public Object searchHighGrade(@RequestParam int userid)throws Exception{
+	@ApiOperation(value = "내가평가한댓글높은점수부터보기")
+	@RequestMapping(value = "/searchHighGradeComment", method = RequestMethod.POST)
+	public Object searchHighGradeComment(@RequestParam int userid)throws Exception{
 		String ret ="";
-		List<Feed> feedlist = feedgradeService.searchHighGrade(userid);
+		List<FeedComment> commentlist = commentgradeService.searchHighGradeComment(userid);
 		
-		if(feedlist.size()!=0) {
+		if(commentlist.size()!=0) {
 			ret = "true";
 		}else {
 			ret = "false";
 		}
-		return new ResponseEntity<List<Feed>>(feedlist,HttpStatus.OK);
+		return new ResponseEntity<List<FeedComment>>(commentlist,HttpStatus.OK);
 	}
-	
-	
 	
 }

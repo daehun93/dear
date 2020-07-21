@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CommentGradeMapper">
+
+<insert id="insertCommentGrade" parameterType="CommentGrade" useGeneratedKeys="true">
+INSERT INTO commentgrade(feedcommentid,userid,grade)
+values(#{feedcommentid},#{userid},#{grade})
+</insert>
+
+<update id="updateCommentGrade" parameterType="CommentGrade">
+	update commentgrade set grade=#{grade}
+	where commentgradeid=#{commentgradeid}
+</update>
+
+<delete id="deleteCommentGrade" parameterType="int">
+delete from commentgrade where commentgradeid=#{commentgradeid}
+</delete>	
+	
+<select id="searchHighGradeComment" parameterType="int" resultType="FeedComment">
+select feedcomment.* from feedcomment,commentgrade where feedcomment.feedcommentid = commentgrade.feedcommentid and commentgrade.userid =#{userid} order by grade desc;
+</select>
+
+	
+</mapper>
