@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NoticeMapper">
+
+<insert id="insertReportFeed" parameterType="ReportFeed" useGeneratedKeys="true">
+INSERT INTO reportfeed(userid,feedid)
+values(#{userid},#{feedid})
+</insert>
+
+<update id="updateReportFeed" parameterType="ReportFeed">
+	update reportfeed set complete=#{complete}
+	where reportfeedid=#{reportfeedid}
+</update>
+
+<delete id="deleteReportFeed" parameterType="ReportFeed">
+delete from reportfeed where userid=#{userid} and feedid=#{feedid}
+</delete>	
+	
+<select id="searchReportFeed" parameterType="int" resultType="Feed">
+select feed.*,reportfeed.complete from feed,reportfeed where feed.feedid in (select feedid from reportfeed where userid =#{userid});
+</select>	
+
+</mapper>

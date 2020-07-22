@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="RecentFeedMapper">
+
+<insert id="insertRecentFeed" parameterType="RecentFeed" useGeneratedKeys="true">
+INSERT INTO recentfeed(userid,feedid)
+values(#{userid},#{feedid})
+</insert>
+
+<delete id="deleteAllRecentFeed" parameterType="int">
+delete from recentfeed where userid=#{userid}
+</delete>	
+
+<delete id="deleteOneRecentFeed" parameterType="int">
+delete from recentfeed where recentfeedid=#{recentfeedid}
+</delete>
+	
+<select id="searchRecentFeed" parameterType="int" resultType="Feed">
+select * from feed where feedid in (select feedid from recentfeed where userid=#{userid});
+</select>	
+
+</mapper>

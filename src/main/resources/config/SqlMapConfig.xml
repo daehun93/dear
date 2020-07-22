@@ -17,6 +17,8 @@
 	<mapper resource="sql/feed-mapping.xml" />
 	<mapper resource="sql/notice-mapping.xml" />
 	<mapper resource="sql/feedgrade-mapping.xml" />
+	<mapper resource="sql/commentgrade-mapping.xml" />
+	<mapper resource="sql/favoritefeed-mapping.xml" />
 	</mappers>
 
 </configuration>

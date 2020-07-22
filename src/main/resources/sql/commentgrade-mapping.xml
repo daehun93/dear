@@ -21,6 +21,5 @@ delete from commentgrade where commentgradeid=#{commentgradeid}
 <select id="searchHighGradeComment" parameterType="int" resultType="FeedComment">
 select feedcomment.* from feedcomment,commentgrade where feedcomment.feedcommentid = commentgrade.feedcommentid and commentgrade.userid =#{userid} order by grade desc;
 </select>
-
 	
 </mapper>

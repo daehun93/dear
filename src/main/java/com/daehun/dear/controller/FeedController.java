@@ -20,9 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.daehun.dear.service.FeedCommentService;
 import com.daehun.dear.service.FeedService;
+import com.daehun.dear.service.RecentFeedService;
 import com.daehun.dear.vo.BasicResponse;
 import com.daehun.dear.vo.Feed;
 import com.daehun.dear.vo.FeedComment;
+import com.daehun.dear.vo.RecentFeed;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.ApiOperation;
@@ -34,6 +36,9 @@ public class FeedController {
 
 	@Autowired
 	private FeedService feedService;
+	
+	@Autowired
+	private RecentFeedService recentfeedService;
 	
 	@Autowired
 	private FeedCommentService feedcommentService;
@@ -119,6 +124,10 @@ public class FeedController {
 		Feed feed = feedService.searchOneFeed(feedid);
 		System.out.println(feed.getTitle());
 		if(feed!=null&&feed.getTitle()!=null) {
+			RecentFeed recentfeed = new RecentFeed();
+			recentfeed.setUserid(feed.getUserid());
+			recentfeed.setFeedid(feedid);
+			recentfeedService.insertRecentFeed(recentfeed);
 			ret = "true";
 		}else {
 			ret = "false";
@@ -209,4 +218,59 @@ public class FeedController {
 		return new ResponseEntity<BasicResponse>(result, HttpStatus.OK);
 	}
 	
+	//최근 본 글 전체삭제
+	@ApiOperation(value = "최근 본 글 전체삭제")
+	@RequestMapping(value = "/deleteAllRecentFeed/{userid}", method = RequestMethod.DELETE)
+	public Object deleteAllRecentFeed(@PathVariable int userid) throws Exception{
+		
+		System.out.println("최근글전체삭제");
+		BasicResponse result = new BasicResponse();
+		
+		boolean flag = recentfeedService.deleteAllRecentFeed(userid);
+		if(!flag) {
+			result.status=false;
+			result.data="fail";
+			
+		}else {
+			result.status=true;
+			result.data="succ";
+		}
+		return new ResponseEntity<BasicResponse>(result, HttpStatus.OK);
+	}
+	
+	//최근 본 글 선택삭제
+	@ApiOperation(value = "최근 본 글 선택삭제")
+	@RequestMapping(value = "/deleteOneRecentFeed/{recentfeedid}", method = RequestMethod.DELETE)
+	public Object deleteOneRecentFeed(@PathVariable int recentfeedid) throws Exception{
+		
+		System.out.println("최근 본 글 선택삭제");
+		BasicResponse result = new BasicResponse();
+		
+		boolean flag = recentfeedService.deleteOneRecentFeed(recentfeedid);
+		if(!flag) {
+			result.status=false;
+			result.data="fail";
+			
+		}else {
+			result.status=true;
+			result.data="succ";
+		}
+		return new ResponseEntity<BasicResponse>(result, HttpStatus.OK);
+	}
+	
+	
+	//최근 본 글 전체보기
+	@ApiOperation(value = "최근 본 글 전체보기")
+	@RequestMapping(value = "/searchRecentFeed", method = RequestMethod.POST)
+	public Object searchRecentFeed(@RequestParam int userid)throws Exception{
+		String ret ="";
+		List<Feed> feedlist = recentfeedService.searchRecentFeed(userid);
+		
+		if(feedlist.size()!=0) {
+			ret = "true";
+		}else {
+			ret = "false";
+		}
+		return new ResponseEntity<List<Feed>>(feedlist,HttpStatus.OK);
+	}
 }
