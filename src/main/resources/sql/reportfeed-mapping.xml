@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="NoticeMapper">
+<mapper namespace="ReportFeedMapper">
 
 <insert id="insertReportFeed" parameterType="ReportFeed" useGeneratedKeys="true">
 INSERT INTO reportfeed(userid,feedid)
@@ -19,7 +19,7 @@ delete from reportfeed where userid=#{userid} and feedid=#{feedid}
 </delete>	
 	
 <select id="searchReportFeed" parameterType="int" resultType="Feed">
-select feed.*,reportfeed.complete from feed,reportfeed where feed.feedid in (select feedid from reportfeed where userid =#{userid});
-</select>	
+select feed.*,reportfeed.complete from feed,reportfeed where feed.feedid = reportfeed.feedid and reportfeed.userid=#{userid};
+</select>
 
 </mapper>

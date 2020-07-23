@@ -19,6 +19,8 @@
 	<mapper resource="sql/feedgrade-mapping.xml" />
 	<mapper resource="sql/commentgrade-mapping.xml" />
 	<mapper resource="sql/favoritefeed-mapping.xml" />
+	<mapper resource="sql/reportfeed-mapping.xml" />
+	<mapper resource="sql/reportcomment-mapping.xml" />
 	</mappers>
 
 </configuration>

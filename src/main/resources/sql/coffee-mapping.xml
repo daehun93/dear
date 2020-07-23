@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CoffeeMapper">
+
+<insert id="insertCoffee" parameterType="Coffee" useGeneratedKeys="true">
+INSERT INTO coffee(userid,count)
+values(#{userid},#{count})
+</insert>
+
+<update id="updateCoffee" parameterType="Coffee">
+	update coffee set count=#{count}
+	where userid=#{userid}
+</update>
+
+<delete id="deleteCoffee" parameterType="int">
+delete from coffee where userid=#{userid}
+</delete>	
+	
+<select id="searchCoffee" resultType="Coffee">
+select * from coffee where userid=#{userid}
+</select>
+
+</mapper>
