@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AlarmMapper">
+
+<insert id="insertAlarm" parameterType="Alarm" useGeneratedKeys="true">
+INSERT INTO alarm(userid,job,age,time)
+values(#{userid},#{job},#{age},#{time})
+</insert>
+
+<update id="updateAlarm" parameterType="Alarm">
+	update alarm set job=#{job},age=#{age},time=#{time}
+	where userid=#{userid}
+</update>
+
+<delete id="deleteAlarm" parameterType="int">
+delete from alarm where userid=#{userid}
+</delete>	
+	
+<select id="searchAlarm" resultType="Alarm">
+select * from alarm where userid=#{userid}
+</select>
+
+</mapper>

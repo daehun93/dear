@@ -21,6 +21,9 @@
 	<mapper resource="sql/favoritefeed-mapping.xml" />
 	<mapper resource="sql/reportfeed-mapping.xml" />
 	<mapper resource="sql/reportcomment-mapping.xml" />
+	<mapper resource="sql/coffee-mapping.xml" />
+	<mapper resource="sql/recentfeed-mapping.xml" />
+	<mapper resource="sql/alarm-mapping.xml" />
 	</mappers>
 
 </configuration>
